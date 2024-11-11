@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'seu-usuario/ac2-project-java:latest'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh 'docker login -u seu-usuario -p seu-token'
+                    sh 'docker push ${DOCKER_IMAGE}'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deploy para Produção foi bem-sucedido!'
+        }
+        failure {
+            echo 'Falha no deploy para Produção!'
+        }
+    }
+}

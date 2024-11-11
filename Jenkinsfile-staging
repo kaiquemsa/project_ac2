@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'kaiquemsilva/ac2-project-java:staging'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh 'docker login -u kaiquemsilva -p dckr_pat_u2XF2xwAEz9_JwYjQs-Gb9Iafco'
+                    sh 'docker push ${DOCKER_IMAGE}'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deploy para Staging foi bem-sucedido!'
+        }
+        failure {
+            echo 'Falha no deploy para Staging!'
+        }
+    }
+}

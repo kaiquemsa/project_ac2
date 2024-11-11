@@ -10,21 +10,16 @@ public class Aluno {
     private Long id;
 
     @Embedded
-    private Nome nome;
+    private String nome;
 
     @Embedded
     private EmailAluno email;
-
-    public Aluno(Nome nome, EmailAluno email) {
-        this.nome = nome;
-        this.email = email;
-    }
 
     public Long getId() {
         return id;
     }
 
-    public Nome getNome() {
+    public String getNome() {
         return nome;
     }
 
@@ -36,7 +31,7 @@ public class Aluno {
         this.id = id;
     }
 
-    public void setNome(Nome nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 

@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  ac2_ca:
+    image: andprof/ac2_ca:latest
+    container_name: ac2_ca_prod
+    ports:
+      - "80:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - ac2_network
+
+networks:
+  ac2_network:
+    driver: bridge

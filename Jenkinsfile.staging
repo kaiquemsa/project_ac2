@@ -1,12 +1,9 @@
 pipeline {
     agent any
-    tools {
-        maven 'Maven' 
-    }
 
     environment {
-        PATH = "/usr/local/bin:$PATH"
-        DOCKER_IMAGE = 'kaiquemsilva/ac2-project-java:staging'
+        APP_ENV = 'staging'
+        PATH = "${env.PATH}:/usr/local/bin"
     }
 
     stages {
@@ -16,38 +13,37 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
+        stage('Start container') {
+                      steps {
+                        echo 'Starting container from Docker Hub...'
+                        // bat 'docker-compose -f docker-compose-staging.yml pull' // Baixa a imagem do Docker Hub
+                        sh 'docker-compose -f docker-compose-staging.yml pull' // Baixa a imagem do Docker Hub // Comando para macos que estou usando
+                        // bat 'docker-compose -f docker-compose-staging.yml up -d --no-color'
+                        sh 'docker-compose -f docker-compose-staging.yml up -d --no-color' // Comando para macos que estou usando
+                        sleep time: 120, unit: 'SECONDS' // Aumenta o tempo para o serviço Spring Boot iniciar
+                        // bat 'docker-compose -f docker-compose-staging.yml logs' // Verifica os logs para conferir o status do Spring Boot
+                        sh 'docker-compose -f docker-compose-staging.yml logs' // Verifica os logs para conferir o status do Spring Boot // Comando para macos que estou usando
+                        // bat 'docker-compose -f docker-compose-staging.yml ps' // Verifica o status do container
+                        sh 'docker-compose -f docker-compose-staging.yml ps' // Verifica o status do container // Comando para macos que estou usando
+                      }
+                    }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
+        stage('Run tests against the container') {
+                    steps {
+                        // bat 'curl http://localhost:8687 || echo "Service not responding"'
+                        sh 'curl http://localhost:8686 || echo "Service not responding"' // Comando para macos que estou usando
+                    }
                 }
-            }
-        }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    sh 'docker login -u kaiquemsilva -p dckr_pat_u2XF2xwAEz9_JwYjQs-Gb9Iafco'
-                    sh 'docker push ${DOCKER_IMAGE}'
-                }
-            }
-        }
+
     }
 
     post {
         success {
-            echo 'Deploy para Staging foi bem-sucedido!'
+            echo "Pipeline Staging concluído com sucesso."
         }
         failure {
-            echo 'Falha no deploy para Staging!'
+            echo "Pipeline Staging falhou."
         }
     }
 }

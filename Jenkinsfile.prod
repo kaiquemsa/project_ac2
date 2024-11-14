@@ -7,23 +7,11 @@ pipeline {
     }
 
     stages {
-        stage('List files') {
-            steps {
-                sh 'ls -la'
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('Check Docker Compose Version') {
-            steps {
-                sh 'docker-compose --version || echo "Docker Compose não encontrado"'
-            }
-        }
-
 
         stage('Start container') {
                       steps {

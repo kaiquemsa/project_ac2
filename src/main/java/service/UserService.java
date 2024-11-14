@@ -6,32 +6,43 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ac2.ac2.repository.AlunoRepository;
-
 import dto.UserDTO;
-import entity.Aluno;
-import entity.EmailAluno;
+import entity.User;
+import repository.UserRepository;
+import valueObject.EmailUser;
+import valueObject.Nome;
 
 @Service
 public class UserService {
-    @Autowired
-    private static AlunoRepository userRepository;
 
-    public Aluno createUser(UserDTO userDTO) {
-        Aluno user = new Aluno();
-        user.setNome(userDTO.getName());
-        user.setEmail(new EmailAluno(userDTO.getEmail()));
-        return userRepository.save(user);
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<UserDTO> listarUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserDTO(user.getName(), user.getEmail()))
+                .collect(Collectors.toList());
     }
 
-    public static List<UserDTO> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(user -> {
-                    UserDTO dto = new UserDTO();
-                    dto.setName(user.getNome());
-                    dto.setEmail(user.getEmail().getEmailAddress());
-                    return dto;
-                })
-                .collect(Collectors.toList());
+    public void salvarUser(UserDTO userDto) {
+        User user = new User();
+
+        user.setNome(new Nome(userDto.getNome()));
+        user.setEmail(new EmailUser(userDto.getEmail()));
+
+        userRepository.save(user);
+    }
+
+    public void deletarUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public void atualizarUser(Long id, UserDTO userDto) {
+        User user = userRepository.findById(id).orElseThrow();
+
+        user.setNome(new Nome(userDto.getNome()));
+        user.setEmail(new EmailUser(userDto.getEmail()));
+
+        userRepository.save(user);
     }
 }

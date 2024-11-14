@@ -12,35 +12,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import dto.CursoDto;
-import service.CursoService;
+import dto.UserDTO;
+import service.UserService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/courses")
-public class CursoController {
+@RequestMapping("/students")
+public class UserController {
 
     @Autowired
-    private CursoService cursoService;
+    private UserService userService;
 
     @GetMapping
-    public List<CursoDto> listarCursos() {
-        return cursoService.listarCursos();
+    public List<UserDTO> listarUsers() {
+        return userService.listarUsers();
     }
 
     @PostMapping
-    public void salvarCurso(@RequestBody CursoDto cursoDto) {
-        cursoService.salvarCurso(cursoDto);
+    public void salvarUser(@RequestBody UserDTO userDto) {
+        userService.salvarUser(userDto);
     }
 
     @DeleteMapping
-    public void deletarCurso(@RequestParam Long id) {
-        cursoService.deletarCurso(id);
+    public void deletarUser(@RequestParam Long id) {
+        userService.deletarUser(id);
     }
 
     @PutMapping
-    public void atualizarCurso(@RequestParam Long id, @RequestBody CursoDto cursoDto) {
-        cursoService.atualizarCurso(id, cursoDto);
+    public void atualizarUser(@RequestParam Long id, @RequestBody UserDTO userDto) {
+        userService.atualizarUser(id, userDto);
     }
 }

@@ -5,16 +5,16 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ac2_project
     volumes:
-      - db-volume:/var/lib/postgresql/data1
+      - db-volume:/var/lib/postgresql/data
 
   api:
     image: kaiquemsilva/ac2-project-java:latest
     networks:
       - default
     environment:
-      DB_HOST: postgres
+      DB_HOST: database
     ports:
-      - "8687:8080"
+      - "8686:8080"
 
 volumes:
   db-volume:

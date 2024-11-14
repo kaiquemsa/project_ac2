@@ -1,18 +1,19 @@
-package entity;
+package valueObject;
 
 import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public class EmailAluno {
+public class EmailUser {
 
     private String emailAddress;
 
-    protected EmailAluno() {
+    // Construtor padrão necessário para o JPA
+    protected EmailUser() {
     }
 
-    public EmailAluno(String emailAddress) {
+    public EmailUser(String emailAddress) {
         if (emailAddress == null || !emailAddress.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             throw new IllegalArgumentException("Email inválido");
         }
@@ -23,13 +24,14 @@ public class EmailAluno {
         return emailAddress;
     }
 
+    // Sobrescreva equals e hashCode para garantir comparação por valor
     @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        EmailAluno email = (EmailAluno) o;
+        EmailUser email = (EmailUser) o;
         return Objects.equals(emailAddress, email.emailAddress);
     }
 

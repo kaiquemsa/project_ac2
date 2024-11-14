@@ -1,4 +1,4 @@
-package entity;
+package valueObject;
 
 import jakarta.persistence.Embeddable;
 
@@ -9,8 +9,8 @@ public class Descricao {
 
     private String descricao;
 
-    protected Descricao() {
-    }
+    // Construtor padrão necessário para o JPA
+    protected Descricao() {}
 
     public Descricao(String descricao) {
         this.descricao = descricao;
@@ -20,16 +20,14 @@ public class Descricao {
         return descricao;
     }
 
+    // Sobrescreva equals e hashCode para garantir comparação por valor
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Descricao descricao = (Descricao) o;
         return Objects.equals(descricao, descricao.descricao);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(descricao);

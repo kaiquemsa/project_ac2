@@ -7,10 +7,7 @@ import java.util.Objects;
 @Embeddable
 public class Nome {
 
-    private String nome;
-
-    protected Nome() {
-    }
+    public String nome;
 
     public Nome(String nome) {
         this.nome = nome;

@@ -16,21 +16,21 @@ pipeline {
         stage('Start container') {
                       steps {
                         echo 'Starting container from Docker Hub...'
-                        // bat 'docker-compose -f docker-compose-staging.yml pull' // Baixa a imagem do Docker Hub
-                        sh 'docker-compose -f docker-compose-staging.yml pull' // Baixa a imagem do Docker Hub // Comando para macos que estou usando
-                        // bat 'docker-compose -f docker-compose-staging.yml up -d --no-color'
-                        sh 'docker-compose -f docker-compose-staging.yml up -d --no-color' // Comando para macos que estou usando
-                        sleep time: 120, unit: 'SECONDS' // Aumenta o tempo para o serviço Spring Boot iniciar
-                        // bat 'docker-compose -f docker-compose-staging.yml logs' // Verifica os logs para conferir o status do Spring Boot
-                        sh 'docker-compose -f docker-compose-staging.yml logs' // Verifica os logs para conferir o status do Spring Boot // Comando para macos que estou usando
-                        // bat 'docker-compose -f docker-compose-staging.yml ps' // Verifica o status do container
-                        sh 'docker-compose -f docker-compose-staging.yml ps' // Verifica o status do container // Comando para macos que estou usando
+                        // bat 'docker-compose -f docker-compose.yml pull' 
+                        sh 'docker-compose -f docker-compose.yml pull' // Comando para macos que estou usando
+                        // bat 'docker-compose -f docker-compose.yml up -d --no-color'
+                        sh 'docker-compose -f docker-compose.yml up -d --no-color' // Comando para macos que estou usando
+                        sleep time: 120, unit: 'SECONDS'
+                        // bat 'docker-compose -f docker-compose.yml logs' 
+                        sh 'docker-compose -f docker-compose.yml logs' // Comando para macos que estou usando
+                        // bat 'docker-compose -f docker-compose.yml ps' 
+                        sh 'docker-compose -f docker-compose.yml ps'  // Comando para macos que estou usando
                       }
                     }
 
         stage('Run tests against the container') {
                     steps {
-                        // bat 'curl http://localhost:8687 || echo "Service not responding"'
+                        // bat 'curl http://localhost:8686 || echo "Service not responding"'
                         sh 'curl http://localhost:8686 || echo "Service not responding"' // Comando para macos que estou usando
                     }
                 }

@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        APP_ENV = 'production'
+        APP_ENV = 'production',
+        PATH = "${env.PATH}:/usr/local/bin"
     }
 
     stages {
@@ -22,15 +23,14 @@ pipeline {
                       steps {
                         echo 'Starting container from Docker Hub...'
                         // bat 'docker-compose -f docker-compose-production.yml pull' // Baixa a imagem do Docker Hub
-                        // sh 'docker-compose -f docker-compose-production.yml pull' 
-                        sh '/usr/local/bin/docker-compose -f docker-compose-production.yml pull' // Baixa a imagem do Docker Hub // Comando para macos que estou usando
+                        sh 'docker-compose -f docker-compose-production.yml pull' // Baixa a imagem do Docker Hub // Comando para macos que estou usando
                         // bat 'docker-compose -f docker-compose-production.yml up -d --no-color'
-                        sh '/usr/local/bin/docker-compose -f docker-compose-production.yml up -d --no-color' // Comando para macos que estou usando
+                        sh 'docker-compose -f docker-compose-production.yml up -d --no-color' // Comando para macos que estou usando
                         sleep time: 120, unit: 'SECONDS' // Aumenta o tempo para o serviço Spring Boot iniciar
                         // bat 'docker-compose -f docker-compose-production.yml logs' // Verifica os logs para conferir o status do Spring Boot
-                        sh '/usr/local/bin/docker-compose -f docker-compose-production.yml logs' // Verifica os logs para conferir o status do Spring Boot // Comando para macos que estou usando
+                        sh 'docker-compose -f docker-compose-production.yml logs' // Verifica os logs para conferir o status do Spring Boot // Comando para macos que estou usando
                         // bat 'docker-compose -f docker-compose-production.yml ps' // Verifica o status do container
-                        sh '/usr/local/bin/docker-compose -f docker-compose-production.yml ps' // Verifica o status do container // Comando para macos que estou usando
+                        sh 'docker-compose -f docker-compose-production.yml ps' // Verifica o status do container // Comando para macos que estou usando
                       }
                     }
 

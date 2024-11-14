@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: ac2_project
+    image: kaiquemsilva/ac2-project-java:latest
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ac2_project

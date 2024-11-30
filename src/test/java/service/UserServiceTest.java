@@ -34,14 +34,14 @@ class UserServiceTest {
     @Test
     void testGetAllUsers() {
         User user1 = new User();
-        Nome nome = new Nome("User1");
+        Nome nome = new Nome("user1");
 
         user1.setId(1L);
         user1.setNome(nome);
         user1.setEmail(new EmailUser("user1@example.com"));
 
         User user2 = new User();
-        Nome nome2 = new Nome("User2");
+        Nome nome2 = new Nome("user2");
         user2.setId(2L);
         user2.setNome(nome2);
         user2.setEmail(new EmailUser("user2@example.com"));

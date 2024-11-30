@@ -10,7 +10,8 @@ public class Descricao {
     private String descricao;
 
     // Construtor padrão necessário para o JPA
-    protected Descricao() {}
+    protected Descricao() {
+    }
 
     public Descricao(String descricao) {
         this.descricao = descricao;
@@ -23,11 +24,14 @@ public class Descricao {
     // Sobrescreva equals e hashCode para garantir comparação por valor
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Descricao descricao = (Descricao) o;
-        return Objects.equals(descricao, descricao.descricao);
+        return Objects.equals(this.descricao, descricao.descricao);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(descricao);

@@ -20,7 +20,7 @@ public class UserService {
 
     public List<UserDTO> listarUsers() {
         return userRepository.findAll().stream()
-                .map(user -> new UserDTO(user.getName(), user.getEmail()))
+                .map(user -> new UserDTO(user.getName(), user.getEmail().getEmailAddress()))
                 .collect(Collectors.toList());
     }
 

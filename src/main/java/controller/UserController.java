@@ -17,7 +17,7 @@ import service.UserService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/students")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired

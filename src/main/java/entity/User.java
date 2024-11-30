@@ -33,8 +33,8 @@ public class User {
         this.nome = name;
     }
 
-    public String getEmail() {
-        return email.getEmailAddress();
+    public EmailUser getEmail() {
+        return email;
     }
 
     public void setEmail(EmailUser email) {

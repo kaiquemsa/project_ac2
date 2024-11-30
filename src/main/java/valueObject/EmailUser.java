@@ -32,7 +32,7 @@ public class EmailUser {
         if (o == null || getClass() != o.getClass())
             return false;
         EmailUser email = (EmailUser) o;
-        return Objects.equals(emailAddress, email.emailAddress);
+        return Objects.equals(this.emailAddress, email.emailAddress);
     }
 
     @Override

@@ -7,14 +7,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.example.ac2_ca.Ac2CaApplication;
 
 import entity.User;
 import valueObject.EmailUser;
 import valueObject.Nome;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
+
+@ContextConfiguration(classes = Ac2CaApplication.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ComponentScan(basePackages = { "repository", "entity", "valueObject" })
 public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
@@ -22,7 +34,7 @@ public class UserRepositoryTest {
     @Test
     void testSaveAndFindAluno() {
         User user = new User();
-        Nome nome = new Nome("Teste");
+        Nome nome = new Nome("testAluno");
         user.setNome(nome);
         user.setEmail(new EmailUser("test@example.com"));
 

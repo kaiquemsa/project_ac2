@@ -9,6 +9,9 @@ public class Nome {
 
     public String nome;
 
+    protected Nome() {
+    }
+
     public Nome(String nome) {
         this.nome = nome;
     }
@@ -24,7 +27,7 @@ public class Nome {
         if (o == null || getClass() != o.getClass())
             return false;
         Nome nome = (Nome) o;
-        return Objects.equals(nome, nome.nome);
+        return Objects.equals(this.nome, nome.nome);
     }
 
     @Override
